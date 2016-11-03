@@ -1,0 +1,233 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+\normalfont \normalsize 
+\textsc{UC Berkeley CS} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge 189 Neural Networks HW4 \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Max Johansen} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+\section{Backprop derivation}
+
+Let $l^{[0]}$ represent the input layer, $l^{[1]}$ represent the hidden layer and $l^{[2]}$ the output layer. Let the activation (activation function applied to weighted combination of inputs) at layer $l^{[k]}$ be represented by $\alpha^{[k]}$. Let $W^{[k]}_{ij}$ represent the weight from node $j \in l^{[k-1]}$ to  $i \in l^{[k]}$. Let $g^{[k]}$ represent the activation function for $l^{[k]}$. Let $z^{[k]}_i$ represent the weighted combination of inputs to node $i \in l^{[k]}$.
+
+\begin{align} 
+\begin{split}
+z^{[k]}_i 	&= \sum_{j=1}^{}W_{ij}^{[k]}\alpha^{[k-1]}
+\end{split}					
+\end{align}
+
+
+\begin{align} 
+\begin{split}
+\alpha^{[k]} 	&= g^{[k]}(W^{[k]}\alpha^{[k-1]})\\
+&=  g^{[k]}(z^{[k]})
+\end{split}					
+\end{align}
+
+%------------------------------------------------
+
+\subsection{Cost function}
+We use cross entropy to represent cost $J$. Let $n_i(x)$ represent the ith component of the network output given features $x$.
+
+\begin{align} 
+\begin{split}
+J 	&= -\sum_{i=1}^{n_{out}}y_i ln (n_i(x))
+\end{split}					
+\end{align}
+
+We need to compute $\frac{\partial J}{\partial W_{ij}}$ using the chain rule.
+
+\begin{align} 
+\begin{split}
+\frac{\partial J}{\partial W_{ij}} 	&= \frac{\partial J}{\partial z^{[2]}_i } \times \frac{\partial  z^{[2]}_i }{\partial  W_{ij} } 
+\end{split}					
+\end{align}
+
+\begin{align} 
+\begin{split}
+\frac{\partial  z^{[2]}_i }{\partial  W_{ij} }  	&= \alpha^{[1]}_j
+\end{split}					
+\end{align}
+
+\begin{align} 
+\begin{split}
+\frac{\partial J}{\partial z^{[2]}_i }  	&= \frac{\partial -\sum_{j=1}^{n_{out}}y_j ln (n_j(x))}{\partial z^{[2]}_i }\\
+&= \frac{\partial -\sum_{j=1}^{n_{out}}y_j ln (g^{[2]}(z^{[2]}_j))}{\partial z^{[2]}_i }\\
+&= -\sum_{j=1}^{n_{out}}\frac{y_j}{g^{[2]}(z^{[2]}_j)} \frac{\partial g^{[2]}(z^{[2]}_j)}{\partial z^{[2]}_i } \\
+&= -\sum_{j=i}^{n_{out}}\frac{y_j}{g^{[2]}(z^{[2]}_j)} \frac{\partial g^{[2]}(z^{[2]}_j)}{\partial z^{[2]}_i } -\sum_{j \ne i}^{n_{out}}\frac{y_j}{g^{[2]}(z^{[2]}_j)} \frac{\partial g^{[2]}(z^{[2]}_j)}{\partial z^{[2]}_i }  \\
+&= -\frac{y_i}{g^{[2]}(z^{[2]}_i)}g^{[2]}(z^{[2]}_i)(1 - g^{[2]}(z^{[2]}_i)) -\sum_{j \ne i}^{n_{out}}\frac{y_j}{g^{[2]}(z^{[2]}_j)} \frac{\partial g^{[2]}(z^{[2]}_j)}{\partial z^{[2]}_i }  \\
+&= -y_i(1 - g^{[2]}(z^{[2]}_i)) -\sum_{j \ne i}^{n_{out}}\frac{y_j}{g^{[2]}(z^{[2]}_j)} \frac{\partial g^{[2]}(z^{[2]}_j)}{\partial z^{[2]}_i }  \\
+&= -y_i(1 - g^{[2]}(z^{[2]}_i)) +\sum_{j \ne i}^{n_{out}}\frac{y_j}{g^{[2]}(z^{[2]}_j)} g^{[2]}(z^{[2]}_j) g^{[2]}(z^{[2]}_i)  \\
+&= -y_i(1 - g^{[2]}(z^{[2]}_i)) +\sum_{j \ne i}^{n_{out}}y_j g^{[2]}(z^{[2]}_i)  \\
+&= -y_i + g^{[2]}(z^{[2]}_i) \sum_{j=1}^{n_{out}}y_j  \\
+&= -y_i + g^{[2]}(z^{[2]}_i)  \\
+&= g^{[2]}(z^{[2]}_i) - y_i  \\
+\end{split}
+\end{align}
+
+Here's some more notation
+\begin{align} 
+\begin{split}
+\delta_i^{[k]}  	&= \frac{\partial J}{\partial z_i^{[k]}}
+\end{split}					
+\end{align}
+
+This implies
+\begin{align} 	
+\begin{split}
+\delta_i^{[2]}	&= g^{[2]}(z_i^{[2]}) - y_i\\
+\end{split}		
+\end{align}
+
+Vectorized
+\begin{align} 	
+\begin{split}
+\delta^{[2]}	&= g^{[2]}(z^{[2]}) - y\\
+\end{split}		
+\end{align}
+
+We can use induction and chain rule here to help us out.
+\begin{align} 
+\begin{split}
+\delta_i^{[k-1]}  	&= \frac{\partial J}{\partial z_i^{[k-1]}}\\
+&= \sum_{j} \frac{\partial J}{\partial z_j^{[k]}} \frac{\partial z_j^{[k]}}{\partial \alpha_i^{[k - 1]}} \frac{\partial \alpha_i^{[k - 1]}}{\partial z_i^{[k-1]}}\\
+&= g^{[k-1]'}z_i^{[k-1]}\sum_{j}\delta_j^{[k]}W^{[k]}_{ji}
+\end{split}					
+\end{align}
+
+Vectorized
+\begin{align} 	
+\begin{split}
+\delta^{[k-1]}	&= g^{[k-1]'}z^{[k-1]} \odot W^{[k]T} \delta^{[k]}\\
+\end{split}		
+\end{align}
+
+Now, we combine $\frac{\partial J}{\partial z^{[k]}_i } \times \frac{\partial  z^{[k]}_i }{\partial  W_{ij} }$ to find $\frac{\partial J}{\partial W_{ij}^{[k]}}$
+\begin{align} 	
+\begin{split}
+\frac{\partial J}{\partial W_{ij}^{[k]}}	&= \delta_i^{[k]}\alpha_j^{[k-1]}\\
+\end{split}		
+\end{align}
+
+Matrix notation
+\begin{align} 	
+\begin{split}
+\frac{\partial J}{\partial W^{[k]}}	&= \delta^{[k]}\alpha^{[k-1]T}\\
+\end{split}		
+\end{align}
+
+Now we derive $\frac{\partial J}{\partial V}$ ($W^{[1]}=V$) ($x$ represents input to network).
+\begin{align} 	
+\begin{split}
+\frac{\partial J}{\partial W^{[1]}}	&= \delta^{[1]}\alpha^{[0]T}\\
+&= \delta^{[1]}x^T\\
+&= g^{[1]'}(z^{[1]}) \odot W^{[2]T}\delta^{[2]}x^T\\
+&= g^{[1]'}(z^{[1]}) \odot W^{[2]T}(g^{[2]}(z^{[2]}) - y)x^T\\
+\end{split}		
+\end{align}
+
+Now we explicitly state $\frac{\partial J}{\partial W^{[2]}}$.
+\begin{align} 	
+\begin{split}
+\frac{\partial J}{\partial W^{[2]}}	&= \delta^{[2]}\alpha^{[1]T}\\
+&= (g^{[2]}(z^{[2]}) - y) \alpha^{[1]T}\\
+\end{split}		
+\end{align}
+
+Now we define the SGD update rule for $W^{[k]}$. Let $\gamma$ represent the learning rate.
+\begin{align} 	
+\begin{split}
+W^{[k]}_{t+1}	&= W^{[k]}_{t} - \gamma \frac{\partial J}{\partial W^{[k]}}\\
+\end{split}		
+\end{align}
+
+Update rule for $W = W^{[2]}$
+\begin{align} 	
+\begin{split}
+W^{[2]}_{t+1}	&= W^{[2]}_{t} - \gamma \frac{\partial J}{\partial W^{[2]}}\\
+&= W^{[2]}_{t} - \gamma  (g^{[2]}(z^{[2]}) - y) \alpha^{[1]T}\\
+\end{split}		
+\end{align}
+
+Update rule for $V = W^{[1]}$
+\begin{align} 	
+\begin{split}
+W^{[1]}_{t+1}	&= W^{[1]}_{t} - \gamma \frac{\partial J}{\partial W^{[1]}}\\
+&= W^{[1]}_{t} - \gamma  g^{[1]'}(z^{[1]}) \odot W^{[2]T}(g^{[2]}(z^{[2]}) - y)\\
+\end{split}		
+\end{align}
+
+
+\subsection{Implementation notes}
+I start with an initial learning rate of $1e-3$ and decay by $1/2$ every epoch. I stopped training after 5 epochs. Total train time was roughly 20 minutes. I initialized the weights to be zero mean gaussians normalized by $sqrt(n_{entries}$. I arrived at trainingAccuracy 0.9966 validationAccuracy 0.9397 which could absolutely be improved with regularization and the addition of a conv layer.
+
+\subsection{Kaggle score}
+My Kaggle score was 0.94580, position 210.
+
+\end{document}

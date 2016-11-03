@@ -1,0 +1,141 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3882,        132]
+NotebookOptionsPosition[      3600,        117]
+NotebookOutlinePosition[      3985,        134]
+CellTagsIndexPosition[      3942,        131]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[Cell[BoxData[{
+ FormBox[
+  RowBox[{"Output", " ", "layer"}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     SubscriptBox["g", "j"], "(", "z", ")"}], "=", 
+    FractionBox[
+     SuperscriptBox["e", 
+      SubscriptBox["z", "j"]], 
+     RowBox[{
+      UnderoverscriptBox["\[Sum]", 
+       RowBox[{"k", "=", "1"}], 
+       SubscriptBox["n", "out"]], 
+      SuperscriptBox["\[ExponentialE]", 
+       SubscriptBox["z", "k"]]}]]}], "\[IndentingNewLine]"}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{"Hidden", " ", "layer"}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"g", "(", "z", ")"}], "=", 
+    RowBox[{"max", "(", 
+     RowBox[{"0", ",", "z"}], ")"}]}], "\[IndentingNewLine]"}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   FractionBox[
+    RowBox[{"d", " ", 
+     SubscriptBox["g", "j"]}], 
+    RowBox[{"d", " ", 
+     SubscriptBox["z", "j"]}]], "=", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["g", "j"], "(", "z", ")"}], 
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      RowBox[{
+       SubscriptBox["g", "j"], "(", "z", ")"}]}], ")"}]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   FractionBox[
+    RowBox[{"d", " ", 
+     SubscriptBox["g", "j"]}], 
+    RowBox[{"d", " ", 
+     SubscriptBox["z", "i"]}]], "=", 
+   RowBox[{
+    RowBox[{"-", 
+     RowBox[{
+      SubscriptBox["g", "i"], "(", "z", ")"}]}], 
+    RowBox[{
+     SubscriptBox["g", "j"], "(", "z", ")"}]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{"J", "=", 
+   RowBox[{"-", 
+    RowBox[{
+     UnderoverscriptBox["\[Sum]", 
+      RowBox[{"k", "=", "1"}], 
+      SubscriptBox["n", "out"]], 
+     RowBox[{
+      SubscriptBox["y", "k"], "ln", " ", 
+      RowBox[{
+       SubscriptBox["z", "k"], "(", "x", ")"}]}]}]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   FractionBox[
+    RowBox[{"\[PartialD]", "J"}], 
+    RowBox[{"\[PartialD]", " ", 
+     RowBox[{
+      SubscriptBox["z", "k"], "(", "x", ")"}]}]], "=", 
+   FractionBox[
+    RowBox[{"-", 
+     SubscriptBox["y", "k"]}], 
+    RowBox[{
+     SubscriptBox["z", "k"], "(", "x", ")"}]]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  FractionBox[
+   RowBox[{"\[PartialD]", 
+    RowBox[{
+     SubscriptBox["z", "k"], "(", "x", ")"}]}], "\[PartialD]"], 
+  TraditionalForm]}]]], "Text",
+ CellChangeTimes->{{3.6862550467567873`*^9, 3.686255194812504*^9}, {
+  3.686255247586164*^9, 3.68625526873951*^9}, {3.686596646784299*^9, 
+  3.686596684327462*^9}, {3.686596729028185*^9, 3.68659694804195*^9}, {
+  3.686596978340239*^9, 3.686597042877788*^9}, {3.686597127900382*^9, 
+  3.68659712790042*^9}, {3.6865972388800783`*^9, 3.686597265112811*^9}, {
+  3.6865975582992077`*^9, 3.686597620443568*^9}, {3.686597811815939*^9, 
+  3.686597834258369*^9}, {3.686597966274873*^9, 3.686598019368433*^9}, {
+  3.6865981591661673`*^9, 3.686598168491664*^9}, {3.686598242430562*^9, 
+  3.686598302387846*^9}}]
+},
+WindowSize->{808, 752},
+WindowMargins->{{Automatic, 169}, {Automatic, 17}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"10.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 29, \
+2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 3038, 95, 469, "Text"]
+}
+]
+*)
+
+(* End of internal cache information *)
